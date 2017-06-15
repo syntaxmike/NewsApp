@@ -19,13 +19,10 @@ public class NetworkUtils {
 
     public static final String PARA_QUERY = "q";
 
-    public static final String PARAM_SORT = "sort";
 
-
-    public static URL makeURL(String searchQuery, String sortBy){
+    public static URL makeURL(String searchQuery){
         Uri uri = Uri.parse(NEWS_APP_API).buildUpon()
-                .appendQueryParameter(PARA_QUERY, searchQuery)
-                .appendQueryParameter(PARAM_SORT, sortBy).build();
+                .appendQueryParameter(PARA_QUERY, searchQuery).build();
 
         URL url = null;
 

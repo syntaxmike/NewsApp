@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(URL... params) {
             String result = null;
-            URL url = NetworkUtils.makeURL(query, "stars");
+            URL url = NetworkUtils.makeURL(query);
             Log.d(TAG, "url:" + url.toString());
             try {
                 result = NetworkUtils.getResponseFromHttpUrl(url);

@@ -14,15 +14,21 @@ public class NetworkUtils {
 
     public static final String TAG = "NetworkUtils";
 
-    public static final String NEWS_APP_API =
-            "https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=26db1a84c65944c5b919ecb488383298";
+    public static final String BASE_NEWS_API =
+            "https://newsapi.org/v1/articles?";
 
-    public static final String PARA_QUERY = "q";
+    public static final String NEXT_WEB_SOURCE = "the-next-web";
+
+    public static final String PARAM_SORT_LATEST = "latest";
+
+    public static final String BASE_NEWS_KEY = "26db1a84c65944c5b919ecb488383298";
 
 
-    public static URL makeURL(String searchQuery){
-        Uri uri = Uri.parse(NEWS_APP_API).buildUpon()
-                .appendQueryParameter(PARA_QUERY, searchQuery).build();
+    public static URL makeURL(){
+        Uri uri = Uri.parse(BASE_NEWS_API).buildUpon()
+                .appendQueryParameter("source", NEXT_WEB_SOURCE)
+                .appendQueryParameter("sortBy", PARAM_SORT_LATEST)
+                .appendQueryParameter("apiKey", BASE_NEWS_KEY).build();
 
         URL url = null;
 

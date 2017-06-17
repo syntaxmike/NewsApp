@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         progress = (ProgressBar) findViewById(R.id.progressBar);
-        search = (EditText) findViewById(R.id.searchQuery);
         textView = (TextView) findViewById(R.id.displayJSON);
     }
 
@@ -46,9 +45,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Searching", Toast.LENGTH_LONG).show();
 
             //Execute ASyncTask
-            String s = search.getText().toString();
 
-            NetworkTask task = new NetworkTask(s);
+            NetworkTask task = new NetworkTask();
             task.execute();
         }
 
@@ -56,11 +54,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class NetworkTask extends AsyncTask<URL, Void, String> {
-        String query;
-
-        NetworkTask(String s){
-            query = s;
-        }
 
         @Override
         protected void onPreExecute() {
@@ -71,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(URL... params) {
             String result = null;
-            URL url = NetworkUtils.makeURL(query);
+            URL url = NetworkUtils.makeURL();
             Log.d(TAG, "url:" + url.toString());
             try {
                 result = NetworkUtils.getResponseFromHttpUrl(url);

@@ -21,7 +21,10 @@ public class NetworkUtils {
 
     public static final String PARAM_SORT_LATEST = "latest";
 
-    public static final String BASE_NEWS_KEY = "26db1a84c65944c5b919ecb488383298";
+    /*
+    * Insert API key in BASE_NEWS_KEY inside quotes.
+    */
+    public static final String BASE_NEWS_KEY = "INSERT_HERE";
 
 
     public static URL makeURL(){

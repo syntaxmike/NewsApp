@@ -3,11 +3,18 @@ package com.example.android.newsapp;
 import android.net.Uri;
 import android.util.Log;
 
+import com.example.android.newsapp.RepoItems.NewsRepositoryItems;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class NetworkUtils {
@@ -22,9 +29,11 @@ public class NetworkUtils {
     public static final String PARAM_SORT_LATEST = "latest";
 
     /*
-    * Insert API key in BASE_NEWS_KEY inside quotes.
+    * Insert API key in BASE_NEWS_KEY, inside quotes.
+    * Hidden for security 
     */
-    public static final String BASE_NEWS_KEY = "INSERT_HERE";
+
+    public static final String BASE_NEWS_KEY = "INSERT_KEY_HERE";
 
 
     public static URL makeURL(){
@@ -58,6 +67,25 @@ public class NetworkUtils {
         } finally {
             urlConnection.disconnect();
         }
+    }
+
+    public static ArrayList<NewsRepositoryItems> parseJSON(String newsItems) throws JSONException{
+        ArrayList<NewsRepositoryItems> allArticles = new ArrayList<>();
+        JSONObject source = new JSONObject(newsItems);
+        JSONArray articles = source.getJSONArray("articles");
+
+        for(int i = 0; i < articles.length(); i++){
+            JSONObject article = articles.getJSONObject(i);
+            String title = article.getString("title");
+            String description = article.getString("description");
+            String time = article.getString("publishedAt");
+            String imageURL = article.getString("urlToImage");
+            String url = article.getString("url");
+            NewsRepositoryItems item = new NewsRepositoryItems(title, description, url, time, imageURL);
+            allArticles.add(item);
+        }
+
+        return allArticles;
     }
 
 }

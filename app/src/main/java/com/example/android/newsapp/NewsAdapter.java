@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import com.squareup.picasso.Picasso;
 
-import com.example.android.newsapp.RepoItems.NewsRepositoryItems;
+import com.example.android.newsapp.data.NewsItem;
 
 /**
  * Created by Syntax Mike on 6/22/2017.
@@ -18,11 +18,11 @@ import com.example.android.newsapp.RepoItems.NewsRepositoryItems;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder> {
 
-    private ArrayList<NewsRepositoryItems> articles;
+    private ArrayList<NewsItem> articles;
     ItemClickListener listener;
     private Context context;
 
-    public NewsAdapter(ArrayList<NewsRepositoryItems> articles, ItemClickListener listener){
+    public NewsAdapter(ArrayList<NewsItem> articles, ItemClickListener listener){
         this.articles = articles;
         this.listener = listener;
     }
@@ -71,7 +71,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
         }
 
         public void bind(int pos){
-            NewsRepositoryItems article = articles.get(pos);
+            NewsItem article = articles.get(pos);
             title.setText(article.getTitle());
             description.setText(article.getDescription());
             time.setText(article.getTime());

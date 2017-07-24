@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.android.newsapp.RepoItems.NewsRepositoryItems;
+import com.example.android.newsapp.data.NewsItem;
 
 import org.json.JSONException;
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    class NetworkTask extends AsyncTask<URL, Void, ArrayList<NewsRepositoryItems>> {
+    class NetworkTask extends AsyncTask<URL, Void, ArrayList<NewsItem>> {
 
         @Override
         protected void onPreExecute() {
@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ArrayList<NewsRepositoryItems> doInBackground(URL... params) {
-            ArrayList<NewsRepositoryItems> allArticles = null;
+        protected ArrayList<NewsItem> doInBackground(URL... params) {
+            ArrayList<NewsItem> allArticles = null;
 
             URL newsSourceUrl = NetworkUtils.makeURL();
 
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(final ArrayList<NewsRepositoryItems> articles) {
+        protected void onPostExecute(final ArrayList<NewsItem> articles) {
             super.onPostExecute(articles);
             mProgress.setVisibility(View.GONE);
             if (articles != null) {

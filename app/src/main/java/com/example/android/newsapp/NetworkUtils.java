@@ -3,7 +3,7 @@ package com.example.android.newsapp;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.android.newsapp.RepoItems.NewsRepositoryItems;
+import com.example.android.newsapp.data.NewsItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,10 +30,10 @@ public class NetworkUtils {
 
     /*
     * Insert API key in BASE_NEWS_KEY, inside quotes.
-    * Hidden for security 
+    * Hidden for security
     */
 
-    public static final String BASE_NEWS_KEY = "INSERT_KEY_HERE";
+    public static final String BASE_NEWS_KEY = "26db1a84c65944c5b919ecb488383298";
 
 
     public static URL makeURL(){
@@ -69,8 +69,8 @@ public class NetworkUtils {
         }
     }
 
-    public static ArrayList<NewsRepositoryItems> parseJSON(String newsItems) throws JSONException{
-        ArrayList<NewsRepositoryItems> allArticles = new ArrayList<>();
+    public static ArrayList<NewsItem> parseJSON(String newsItems) throws JSONException{
+        ArrayList<NewsItem> allArticles = new ArrayList<>();
         JSONObject source = new JSONObject(newsItems);
         JSONArray articles = source.getJSONArray("articles");
 
@@ -81,7 +81,7 @@ public class NetworkUtils {
             String time = article.getString("publishedAt");
             String imageURL = article.getString("urlToImage");
             String url = article.getString("url");
-            NewsRepositoryItems item = new NewsRepositoryItems(title, description, url, time, imageURL);
+            NewsItem item = new NewsItem(title, description, url, time, imageURL);
             allArticles.add(item);
         }
 

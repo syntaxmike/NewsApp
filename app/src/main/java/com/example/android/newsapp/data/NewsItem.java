@@ -1,17 +1,17 @@
-package com.example.android.newsapp.RepoItems;
+package com.example.android.newsapp.data;
 
 /**
  * Created by Syntax Mike on 6/22/2017.
  */
 
-public class NewsRepositoryItems {
+public class NewsItem {
     private String title;
     private String description;
     private String url;
     private String time;
     private String imageURL;
 
-    public NewsRepositoryItems(String title, String description, String url, String time, String imageURL) {
+    public NewsItem(String title, String description, String url, String time, String imageURL) {
         this.title = title;
         this.description = description;
         this.time = time;

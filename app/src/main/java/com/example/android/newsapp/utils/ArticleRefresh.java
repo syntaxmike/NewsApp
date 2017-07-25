@@ -1,4 +1,4 @@
-package com.example.android.newsapp;
+package com.example.android.newsapp.utils;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by Syntax Mike on 7/25/2017.
  */
 
-public class JobArticleRefresh {
+public class ArticleRefresh {
 
     public static void refreshingTheNews(Context context){
         ArrayList<NewsItem> updatedArticles;

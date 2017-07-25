@@ -1,4 +1,4 @@
-package com.example.android.newsapp;
+package com.example.android.newsapp.dispatcher;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -16,9 +16,8 @@ import com.firebase.jobdispatcher.Trigger;
  */
 
 public class NewsJobDispatch {
-    private static final int INTERVAL_MINUTES = 360;
-    private static final int SYNC_SECONDS = 60;
-    private static final String NEWS_JOB_TAG = "news_job_tag";
+    private static final int INTERVAL_MINUTES = 30;
+    private static final int SYNC_SECONDS = 30;
 
 
     private static boolean mInitial;
@@ -31,7 +30,7 @@ public class NewsJobDispatch {
 
         Job constraintRefreshJob = dispatcher.newJobBuilder()
                 .setService(NewsJob.class)
-                .setTag(NEWS_JOB_TAG)
+                .setTag("DispatcherService")
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setLifetime(Lifetime.FOREVER)
                 .setRecurring(true)

@@ -1,8 +1,10 @@
-package com.example.android.newsapp;
+package com.example.android.newsapp.dispatcher;
 
+import com.example.android.newsapp.utils.ArticleRefresh;
 import com.firebase.jobdispatcher.JobService;
 import com.firebase.jobdispatcher.JobParameters;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 /**
  * Created by Syntax Mike on 7/25/2017.
@@ -16,12 +18,13 @@ public class NewsJob extends JobService {
         mBackgroundTask = new AsyncTask() {
             @Override
             protected void onPreExecute() {
+                Toast.makeText(NewsJob.this, "Refreshed...", Toast.LENGTH_SHORT).show();
                 super.onPreExecute();
             }
 
             @Override
             protected Object doInBackground(Object[] params) {
-                JobArticleRefresh.refreshingTheNews(NewsJob.this);
+                ArticleRefresh.refreshingTheNews(NewsJob.this);
                 return null;
             }
 

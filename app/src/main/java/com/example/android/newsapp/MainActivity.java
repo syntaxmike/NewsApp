@@ -1,9 +1,11 @@
 package com.example.android.newsapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
@@ -21,6 +23,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.android.newsapp.data.Contract;
 import com.example.android.newsapp.data.DBHelper;
+import com.example.android.newsapp.dispatcher.NewsJobDispatch;
+import com.example.android.newsapp.utils.ArticleRefresh;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Void>, NewsAdapter.ItemClickListener{
     private ProgressBar mProgress;
@@ -50,17 +54,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             editor.putBoolean("isfirst", false);
             editor.commit();
         }
+
+        mNewsDatabase = new DBHelper(MainActivity.this).getReadableDatabase();
+        mCursor = DBHelper.getAll(mNewsDatabase);
+        mNewsAdapter = new NewsAdapter(mCursor, this);
+        mRV.setAdapter(mNewsAdapter);
+
         NewsJobDispatch.refresh(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        mNewsDatabase = new DBHelper(MainActivity.this).getReadableDatabase();
-        mCursor = DBHelper.getAll(mNewsDatabase);
-        mNewsAdapter = new NewsAdapter(mCursor, this);
-        mRV.setAdapter(mNewsAdapter);
     }
 
     @Override
@@ -81,16 +86,33 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         int itemNumber = item.getItemId();
 
         if(itemNumber == R.id.search){
-            Toast.makeText(this, "Searching...", Toast.LENGTH_LONG).show();
-            newsLoader();
+            if(checkInternetConnection(this)) {
+                Toast.makeText(this, "Searching...", Toast.LENGTH_LONG).show();
+                newsLoader();
+            }else {
 
-            //Execute ASyncTask
+            }
+        }
+        return true;
+    }
 
-//            NetworkTask task = new NetworkTask();
-//            task.execute();
+    public static boolean checkInternetConnection(Context context)
+    {
+        try
+        {
+            ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            if (conMgr.getActiveNetworkInfo() != null && conMgr.getActiveNetworkInfo().isAvailable() && conMgr.getActiveNetworkInfo().isConnected())
+                return true;
+            else
+                return false;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
 
-        return true;
+        return false;
     }
 
     @Override
@@ -117,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             @Override
             public Void loadInBackground() {
-                JobArticleRefresh.refreshingTheNews(MainActivity.this);
+                ArticleRefresh.refreshingTheNews(MainActivity.this);
                 return null;
             }
         };

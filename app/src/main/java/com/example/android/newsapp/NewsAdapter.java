@@ -1,6 +1,7 @@
 package com.example.android.newsapp;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
+
+import com.example.android.newsapp.data.Contract;
 import com.squareup.picasso.Picasso;
 
 import com.example.android.newsapp.data.NewsItem;
@@ -18,23 +21,23 @@ import com.example.android.newsapp.data.NewsItem;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder> {
 
-    private ArrayList<NewsItem> articles;
-    ItemClickListener listener;
-    private Context context;
+    private Cursor mCursor;
+    private ItemClickListener mListener;
+    private Context mContext;
 
-    public NewsAdapter(ArrayList<NewsItem> articles, ItemClickListener listener){
-        this.articles = articles;
-        this.listener = listener;
+    public NewsAdapter(Cursor cursor, ItemClickListener listener){
+        this.mCursor = cursor;
+        this.mListener = listener;
     }
 
     public interface ItemClickListener {
-        void onItemClick(int clickedItemIndex);
+        void onItemClick(Cursor cursor, int clickedItemIndex);
     }
 
     @Override
     public ArticleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
+        mContext = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(mContext);
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(R.layout.newsitem, parent, shouldAttachToParentImmediately);
@@ -50,7 +53,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
 
     @Override
     public int getItemCount() {
-        return articles.size();
+        return mCursor.getCount();
     }
 
     class ArticleHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -71,22 +74,22 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
         }
 
         public void bind(int pos){
-            NewsItem article = articles.get(pos);
-            title.setText(article.getTitle());
-            description.setText(article.getDescription());
-            time.setText(article.getTime());
+            mCursor.moveToPosition(pos);
+            title.setText(mCursor.getString(mCursor.getColumnIndex(Contract.TABLE_NEWS.COLUMN_TITLE)));
+            description.setText(mCursor.getString(mCursor.getColumnIndex(Contract.TABLE_NEWS.COLUMN_DESCRIPTION)));
+            time.setText(mCursor.getString(mCursor.getColumnIndex(Contract.TABLE_NEWS.COLUMN_TIME)));
             /*
              * Picasso tutorial online
              * https://square.github.io/picasso/
              */
-            Picasso.with(context).load(article.getImageURL()).resize(750, 550).into(imageView);
-            url.setText(article.getUrl());
+            Picasso.with(mContext).load(mCursor.getString(mCursor.getColumnIndex(Contract.TABLE_NEWS.COLUMN_IMAGE_URL))).resize(750, 550).into(imageView);
+            url.setText(mCursor.getString(mCursor.getColumnIndex(Contract.TABLE_NEWS.COLUMN_URL)));
         }
 
         @Override
         public void onClick(View v) {
             int pos = getAdapterPosition();
-            listener.onItemClick(pos);
+            mListener.onItemClick(mCursor, pos);
         }
     }
 

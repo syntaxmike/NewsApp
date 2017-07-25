@@ -19,21 +19,21 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    public static final String TAG = "NetworkUtils";
+    private static final String TAG = "NetworkUtils";
 
-    public static final String BASE_NEWS_API =
+    private static final String BASE_NEWS_API =
             "https://newsapi.org/v1/articles?";
 
-    public static final String NEXT_WEB_SOURCE = "the-next-web";
+    private static final String NEXT_WEB_SOURCE = "the-next-web";
 
-    public static final String PARAM_SORT_LATEST = "latest";
+    private static final String PARAM_SORT_LATEST = "latest";
 
     /*
     * Insert API key in BASE_NEWS_KEY, inside quotes.
     * Hidden for security
     */
 
-    public static final String BASE_NEWS_KEY = "HIDDEN";
+    private static final String BASE_NEWS_KEY = "26db1a84c65944c5b919ecb488383298";
 
 
     public static URL makeURL(){
@@ -77,11 +77,12 @@ public class NetworkUtils {
         for(int i = 0; i < articles.length(); i++){
             JSONObject article = articles.getJSONObject(i);
             String title = article.getString("title");
+            String author = article.getString("author");
             String description = article.getString("description");
             String time = article.getString("publishedAt");
             String imageURL = article.getString("urlToImage");
             String url = article.getString("url");
-            NewsItem item = new NewsItem(title, description, url, time, imageURL);
+            NewsItem item = new NewsItem(title, description, url, time, imageURL, author);
             allArticles.add(item);
         }
 

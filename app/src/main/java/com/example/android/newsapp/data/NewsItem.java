@@ -5,18 +5,29 @@ package com.example.android.newsapp.data;
  */
 
 public class NewsItem {
+
     private String title;
     private String description;
     private String url;
     private String time;
     private String imageURL;
+    private String author;
 
-    public NewsItem(String title, String description, String url, String time, String imageURL) {
+    public NewsItem(String title, String description, String url, String time, String imageURL, String author) {
         this.title = title;
         this.description = description;
         this.time = time;
         this.url = url;
         this.imageURL = imageURL;
+        this.author = author;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getImageURL() {

@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Toast.makeText(this, "Searching...", Toast.LENGTH_LONG).show();
                 newsLoader();
             }else {
-
+                Toast.makeText(this, "No Service!", Toast.LENGTH_SHORT).show();
             }
         }
         return true;

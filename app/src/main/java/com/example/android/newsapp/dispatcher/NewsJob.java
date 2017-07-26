@@ -18,7 +18,7 @@ public class NewsJob extends JobService {
         mBackgroundTask = new AsyncTask() {
             @Override
             protected void onPreExecute() {
-                Toast.makeText(NewsJob.this, "Refreshed...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewsJob.this, "Refreshed!", Toast.LENGTH_SHORT).show();
                 super.onPreExecute();
             }
 

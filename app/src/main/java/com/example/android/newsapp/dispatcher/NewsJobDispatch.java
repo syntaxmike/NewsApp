@@ -30,7 +30,6 @@ public class NewsJobDispatch {
 
         Job constraintRefreshJob = dispatcher.newJobBuilder()
                 .setService(NewsJob.class)
-                .setTag("DispatcherService")
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setLifetime(Lifetime.FOREVER)
                 .setRecurring(true)

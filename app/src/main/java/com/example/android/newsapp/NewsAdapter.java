@@ -69,7 +69,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
             description = (TextView)view.findViewById(R.id.description);
             time = (TextView) view.findViewById(R.id.time);
             imageView = (ImageView) view.findViewById(R.id.image);
-            url = (TextView)view.findViewById(R.id.url);
             view.setOnClickListener(this);
         }
 
@@ -83,7 +82,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
              * https://square.github.io/picasso/
              */
             Picasso.with(mContext).load(mCursor.getString(mCursor.getColumnIndex(Contract.TABLE_NEWS.COLUMN_IMAGE_URL))).resize(750, 550).into(imageView);
-            url.setText(mCursor.getString(mCursor.getColumnIndex(Contract.TABLE_NEWS.COLUMN_URL)));
         }
 
         @Override

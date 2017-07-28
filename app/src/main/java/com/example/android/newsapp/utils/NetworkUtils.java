@@ -39,7 +39,7 @@ public class NetworkUtils {
     * Hidden for security
     */
 
-    private static final String BASE_NEWS_KEY = "26db1a84c65944c5b919ecb488383298";
+    private static final String BASE_NEWS_KEY = "Hidden";
 
 
     public static URL makeURL(){

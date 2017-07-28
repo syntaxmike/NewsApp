@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("isfirst", false);
             editor.commit();
+            
         }
 
         /**

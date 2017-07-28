@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Syntax Mike on 7/24/2017.
+ *
+ * This class creates and handles the database data.
  */
 
 
@@ -23,8 +25,12 @@ public class DBHelper extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
+        /**
+         * Creates the database and inserts the appropriate columns.
+         */
         String newsQuery = "CREATE TABLE " + Contract.TABLE_NEWS.TABLE_NAME + " ("+
                 Contract.TABLE_NEWS._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Contract.TABLE_NEWS.COLUMN_TITLE + " TEXT NOT NULL, " +
@@ -39,10 +45,17 @@ public class DBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table " + Contract.TABLE_NEWS.TABLE_NAME + " if exists;");
+        /**
+         * If Database version do not match drop existing table.
+         */
+        db.execSQL("DROP TABLE " + Contract.TABLE_NEWS.TABLE_NAME + " IF EXISTS;");
     }
 
 
+
+    /**
+     * Helper method uses cursor for the database and sorts by date/time.
+     */
     public static Cursor getAll(SQLiteDatabase db) {
         Cursor cursor = db.query(
                 Contract.TABLE_NEWS.TABLE_NAME,
@@ -56,6 +69,9 @@ public class DBHelper extends SQLiteOpenHelper{
         return cursor;
     }
 
+    /**
+     * Helper method that inserts data into the database using transaction to prevent multiple open/close.
+     */
     public static void bulkInsert(SQLiteDatabase db, ArrayList<NewsItem> articles) {
 
         db.beginTransaction();
@@ -77,6 +93,9 @@ public class DBHelper extends SQLiteOpenHelper{
         }
     }
 
+    /**
+     * Helper method deletes entire data from database in preparation of a refresh.
+     */
     public static void deleteAll(SQLiteDatabase db) {
         db.delete(Contract.TABLE_NEWS.TABLE_NAME, null, null);
     }

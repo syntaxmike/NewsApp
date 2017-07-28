@@ -17,6 +17,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Created by Syntax Mike on 6/22/2017.
+ *
+ * This class handles the network calls and parses the information into an Arraylist.
+ */
+
 public class NetworkUtils {
 
     private static final String TAG = "NetworkUtils";
@@ -28,7 +34,7 @@ public class NetworkUtils {
 
     private static final String PARAM_SORT_LATEST = "latest";
 
-    /*
+    /**
     * Insert API key in BASE_NEWS_KEY, inside quotes.
     * Hidden for security
     */
@@ -75,14 +81,14 @@ public class NetworkUtils {
         JSONArray articles = source.getJSONArray("articles");
 
         for(int i = 0; i < articles.length(); i++){
-            JSONObject article = articles.getJSONObject(i);
-            String title = article.getString("title");
-            String author = article.getString("author");
-            String description = article.getString("description");
-            String time = article.getString("publishedAt");
-            String imageURL = article.getString("urlToImage");
-            String url = article.getString("url");
-            NewsItem item = new NewsItem(title, description, url, time, imageURL, author);
+            JSONObject article = articles.getJSONObject(i);;;
+            NewsItem item = new NewsItem(
+                    article.getString("title"),
+                    article.getString("description"),
+                    article.getString("url"),
+                    article.getString("publishedAt"),
+                    article.getString("urlToImage"),
+                    article.getString("author"));
             allArticles.add(item);
         }
 

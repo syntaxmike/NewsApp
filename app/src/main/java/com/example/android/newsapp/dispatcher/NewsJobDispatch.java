@@ -15,12 +15,20 @@ import com.firebase.jobdispatcher.Trigger;
  * Created by Syntax Mike on 7/25/2017.
  */
 
+/**
+ * This class is intended for the Firebase Job Dispatcher initialization.
+ */
+
 public class NewsJobDispatch {
-    private static final int INTERVAL_MINUTES = 30;
-    private static final int SYNC_SECONDS = 30;
+    private static final int INTERVAL_MINUTES = 59;
+    private static final int SYNC_SECONDS = 2;
 
 
+    /**
+     * Boolean checks if Job was already scheduled.
+     */
     private static boolean mInitial;
+
 
     synchronized public static void refresh(@NonNull final Context context){
         if (mInitial) return;
@@ -28,8 +36,14 @@ public class NewsJobDispatch {
         Driver mDriver = new GooglePlayDriver(context);
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(mDriver);
 
+
+        /**
+         * Builds the Job using Firebase Dispatcher
+         * Purpose of the Job is to refresh the database every X amount of time.
+         */
         Job constraintRefreshJob = dispatcher.newJobBuilder()
                 .setService(NewsJob.class)
+                .setTag("NewsDispatch")
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setLifetime(Lifetime.FOREVER)
                 .setRecurring(true)
@@ -39,6 +53,9 @@ public class NewsJobDispatch {
                 .build();
 
         dispatcher.schedule(constraintRefreshJob);
+        /**
+         * Set true to prevent another Job being initiated
+         */
         mInitial = true;
     }
 }

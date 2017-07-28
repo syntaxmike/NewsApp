@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.newsapp">
 
+    <!--
+            Permissions for internet access and connectivity service states.
+    -->
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -21,6 +25,9 @@
             </intent-filter>
         </activity>
 
+        <!--
+            Service added for dispatcher and intent filter.
+        -->
         <service android:name=".dispatcher.NewsJob"
             android:exported="false">
             <intent-filter>
